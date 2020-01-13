@@ -1,4 +1,4 @@
-package com.example.gogot;
+package com.example.gogot.controller;
 
 
 import com.example.gogot.domain.Message;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Map;
 
 @Controller
-public class GreetingController {
+public class MainController {
     @Autowired
     private MessageRepository messageRepository;
 
