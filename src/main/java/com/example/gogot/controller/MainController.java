@@ -2,8 +2,10 @@ package com.example.gogot.controller;
 
 
 import com.example.gogot.domain.Message;
+import com.example.gogot.domain.User;
 import com.example.gogot.repos.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,7 @@ public class MainController {
         return "greeting";
     }
 
+    //отдаём все сообщения
     @GetMapping("/main")
     public String main(Map<String, Object> model) {
         Iterable<Message> messages = messageRepository.findAll();
@@ -28,15 +31,21 @@ public class MainController {
         return "main";
     }
 
+    //сейвим запись в бд
     @PostMapping("/main")
-    public String add(@RequestParam String text, @RequestParam String tag,  Map<String, Object> model) {
-        Message message = new Message(text, tag);
+    public String add(
+            @AuthenticationPrincipal User user,
+            @RequestParam String text,
+            @RequestParam String tag,  Map<String, Object> model
+    ) {
+        Message message = new Message(text, tag, user);
         messageRepository.save(message);
         Iterable<Message> messages = messageRepository.findAll();
         model.put("messages", messages);
         return "main";
     }
 
+    //фильтруем по тегу
     @PostMapping("filter")
     public String filter(@RequestParam String filter, Map<String, Object> model) {
         Iterable<Message> messages;
