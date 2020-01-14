@@ -5,10 +5,10 @@ import com.example.gogot.domain.User;
 import com.example.gogot.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
@@ -18,7 +18,8 @@ public class RegistrationController {
     private UserRepository userRepository;
 
     @GetMapping("/registration")
-    public String registration() {
+    public String registration(Model model) {
+        model.addAttribute("message", "");
         return "registration";
     }
 
