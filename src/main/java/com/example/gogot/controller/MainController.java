@@ -24,7 +24,7 @@ public class MainController {
         return "greeting";
     }
 
-    //отдаём все сообщения
+    //отдаём все сообщения, фильтруем по тэгу
     @GetMapping("/main")
     public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
         Iterable<Message> messages = messageRepository.findAll();
@@ -38,7 +38,7 @@ public class MainController {
         return "main";
     }
 
-    //сохраняем запись в бд
+     //сохраняем запись в бд
     @PostMapping("/main")
     public String add(
             @AuthenticationPrincipal User user,
@@ -51,6 +51,4 @@ public class MainController {
         model.put("messages", messages);
         return "main";
     }
-
-
 }
